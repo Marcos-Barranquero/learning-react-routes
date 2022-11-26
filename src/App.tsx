@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { Admin, Analytics, DashBoard, Landing, UserHome } from './pages'
 import { useLogin } from './loginHook'
+import { ProtectedRoute } from './components/ProtectRoute'
 
 const App = () => {
   const { user, login, logout } = useLogin()
@@ -14,7 +15,16 @@ const App = () => {
       <Routes>
         <Route index element={<Landing />} />
         <Route path='/landing' element={<Landing />} />
-        <Route path='/home' element={<UserHome />} />
+
+        <Route
+          path='/home'
+          element={
+            <ProtectedRoute user={user}>
+              <UserHome />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path='/dashboard' element={<DashBoard />} />
         <Route path='/analytics' element={<Analytics />} />
         <Route path='/admin' element={<Admin />} />
