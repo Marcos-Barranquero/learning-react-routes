@@ -1,25 +1,9 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { Admin, Analytics, DashBoard, Landing, UserHome } from './pages'
-import { useState } from 'react'
-
-type User = {
-  id: number
-  name: string
-}
+import { useLogin } from './loginHook'
 
 const App = () => {
-  const [user, setUser] = useState(null as User | null)
-
-  const login = () => {
-    setUser({
-      id: 1,
-      name: 'John Doe',
-    })
-  }
-
-  const logout = () => {
-    setUser(null)
-  }
+  const { user, login, logout } = useLogin()
 
   return (
     <BrowserRouter>
