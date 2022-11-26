@@ -1,9 +1,32 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { Admin, Analytics, DashBoard, Landing, UserHome } from './pages'
+import { useState } from 'react'
+
+type User = {
+  id: number
+  name: string
+}
+
 const App = () => {
+  const [user, setUser] = useState(null as User | null)
+
+  const login = () => {
+    setUser({
+      id: 1,
+      name: 'John Doe',
+    })
+  }
+
+  const logout = () => {
+    setUser(null)
+  }
+
   return (
     <BrowserRouter>
       <Navigation />
+
+      {user ? <button onClick={logout}>Logout</button> : <button onClick={login}>Login</button>}
+
       <Routes>
         <Route index element={<Landing />} />
         <Route path='/landing' element={<Landing />} />
