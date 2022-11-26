@@ -3,7 +3,7 @@ import { Admin, Analytics, DashBoard, Landing, UserHome } from './pages'
 import { useLogin } from './loginHook'
 import { ProtectedRoute } from './components/ProtectRoute'
 
-const App = () => {
+const App = (): JSX.Element => {
   const { user, login, logout } = useLogin()
 
   return (
@@ -15,18 +15,20 @@ const App = () => {
       <Routes>
         <Route index element={<Landing />} />
         <Route path='/landing' element={<Landing />} />
+        <Route element={<ProtectedRoute user={user} />}>
+          <Route path='/home' element={<UserHome />} />
+          <Route path='/dashboard' element={<DashBoard />} />
+        </Route>
 
         <Route
-          path='/home'
+          path='/analytics'
           element={
             <ProtectedRoute user={user}>
-              <UserHome />
+              <Analytics />
             </ProtectedRoute>
           }
-        />
+        ></Route>
 
-        <Route path='/dashboard' element={<DashBoard />} />
-        <Route path='/analytics' element={<Analytics />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='*' element={<h2>404 Not Found</h2>} />
       </Routes>
